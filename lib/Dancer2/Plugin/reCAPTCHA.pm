@@ -160,6 +160,6 @@ Example:
 =head1 ACKNOWLEDGEMENTS
 
 Based on Jason A. Crome's plugin for Dancer version 1
-(Dancer::Plugin::reCAPTCHA).
+(Dancer::Plugin::reCAPTCHA). Makes use of Fred Moyer's Captcha::reCAPTCHA.
 
 =cut
