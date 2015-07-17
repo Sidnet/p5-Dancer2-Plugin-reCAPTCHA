@@ -98,7 +98,8 @@ The reCAPTCHA private key.
 
 =head2 theme
 
-The color theme of the captcha widget. Possible values: C<dark>, C<light>.
+The color theme of the captcha widget. Possible values: C<red>, C<white>,
+C<blackglass>, C<clean>.
 
 =head2 use_ssl
 
