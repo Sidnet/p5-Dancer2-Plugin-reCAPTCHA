@@ -44,7 +44,44 @@ __END__
 
 =head1 SYNOPSIS
 
-A plugin to integrate reCAPTCHA with Dancer2 application
+Dancer2::Plugin::reCAPTCHA allows you to easily use reCAPTCHA in Dancer2
+applications.
+
+Add the plugin to your application:
+
+    use Dancer2::Plugin::reCAPTCHA;
+
+Configure its settings in the YAML configuration file:
+
+    plugins:
+        reCAPTCHA:
+            public_key: "public key"
+            private_key: "private key"
+            theme: "clean"
+            use_ssl: 0
+
+Put reCAPTCHA in a template:
+
+    [% recaptcha %]
+
+Display it:
+
+    return template 'feedback', { 
+        recaptcha => recaptcha_display()
+    };
+
+Validate user input in a route handler:
+
+    my $challenge = param('recaptcha_challenge_field');
+    my $response  = param('recaptcha_response_field');
+    my $result    = recaptcha_check($challenge, $response);
+
+    if ($result->{is_valid}) {
+        # Good
+    }
+    else {
+        # Bad
+    }
 
 =head1 CONFIGURATION
 
