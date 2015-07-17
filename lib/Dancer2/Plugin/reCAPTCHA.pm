@@ -86,12 +86,24 @@ Validate user input in a route handler:
 
 =head1 CONFIGURATION
 
-plugins:
-    reCAPTCHA:
-        public_key: "Public/Site key from service provider"
-        private_key: "Private/Secret key from service provider"
-        theme: "clean"
-        use_ssl: 0
+The available configuration settings are described below.
+
+=head2 public_key
+
+The reCAPTCHA public key.
+
+=head2 private_key
+
+The reCAPTCHA private key.
+
+=head2 theme
+
+The color theme of the captcha widget. Possible values: C<dark>, C<light>.
+
+=head2 use_ssl
+
+If set to C<1>, reCAPTCHA will use an SSL-based API (should be enabled on pages
+served over SSL).
 
 =head1 SUBROUTINES/METHODS
 
