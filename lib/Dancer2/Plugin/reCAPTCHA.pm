@@ -2,12 +2,13 @@ package Dancer2::Plugin::reCAPTCHA;
 
 use strict;
 use warnings;
-use Dancer2::Plugin;
-use Captcha::reCAPTCHA;
 
 # ABSTRACT: Integrate reCAPTCHA into Dancer2 applications
 
 # VERSION
+
+use Dancer2::Plugin;
+use Captcha::reCAPTCHA;
 
 my $rc = Captcha::reCHAPTCHA->new;
 
