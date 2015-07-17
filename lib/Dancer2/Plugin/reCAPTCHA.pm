@@ -5,8 +5,10 @@ use warnings;
 use Dancer2::Plugin;
 use Captcha::reCAPTCHA;
 
-# ABSTRACT: Easy to integrate reCAPTCHA into Dancer2 application
+# ABSTRACT: Integrate reCAPTCHA into Dancer2 applications
+
 our $VERSION = '0.01';
+
 # VERSION
 
 my $rc = Captcha::reCHAPTCHA->new;
