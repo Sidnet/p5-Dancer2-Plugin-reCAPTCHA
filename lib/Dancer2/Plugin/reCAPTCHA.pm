@@ -14,22 +14,23 @@ my $rc = Captcha::reCHAPTCHA->new;
 
 register recaptcha_display => sub {
     my $conf = plugin_setting();
+
     return $rc->get_html( 
-        $conf->{ public_key },
+        $conf->{public_key},
         undef,
-        $conf->{ use_ssl },
-        { theme =>  $conf->{ theme }},
+        $conf->{use_ssl},
+        { theme =>  $conf->{theme} },
     );
 };
 
-
 register recaptcha_check => sub {
     my $dsl = shift;
-    my ( $challenge, $response ) = @_;
+    my ($challenge, $response) = @_;
     my $app = $dsl->app;
     my $conf = plugin_setting();
+
     return $rc->check_answer(
-        $conf->{ private_key },
+        $conf->{private_key},
         $app->request->remote_address,
         $challenge,
         $response,
