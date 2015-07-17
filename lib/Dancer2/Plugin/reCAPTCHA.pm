@@ -10,7 +10,7 @@ use warnings;
 use Dancer2::Plugin;
 use Captcha::reCAPTCHA;
 
-my $rc = Captcha::reCHAPTCHA->new;
+my $rc = Captcha::reCAPTCHA->new;
 
 register recaptcha_display => sub {
     my $conf = plugin_setting();
