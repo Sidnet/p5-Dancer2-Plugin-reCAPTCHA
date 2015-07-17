@@ -7,8 +7,6 @@ use Captcha::reCAPTCHA;
 
 # ABSTRACT: Integrate reCAPTCHA into Dancer2 applications
 
-our $VERSION = '0.01';
-
 # VERSION
 
 my $rc = Captcha::reCHAPTCHA->new;
