@@ -138,10 +138,15 @@ Example:
 
 =for :list
 
-* L<Captcha::reCAPTCHA|https://metacpan.org/pod/Captcha::reCAPTCHA/>
+* L<Captcha::reCAPTCHA>
 
-* L<Dancer2::Plugin|https://metacpan.org/pod/Dancer2::Plugin/>
+* L<Dancer::Plugin::reCAPTCHA>
 
 * L<Google reCAPTCHA API Reference|https://www.google.com/recaptcha/intro/index.html/>
+
+=head1 ACKNOWLEDGEMENTS
+
+Based on Jason A. Crome's plugin for Dancer version 1
+(Dancer::Plugin::reCAPTCHA).
 
 =cut
