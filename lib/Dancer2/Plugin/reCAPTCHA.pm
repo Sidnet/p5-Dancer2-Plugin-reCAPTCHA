@@ -110,33 +110,44 @@ served over SSL).
 
 =head2 recaptcha_display
 
-Generates scalar HTML to display the CAPTCHA and plugs into template. 
+Generates the HTML to display the captcha which should be placed in a template. 
+
 Example:
     
-    # Controller
+    # In route handler
     template 'index' => { 
         recaptcha => recaptcha_display() 
     };
 
-    # Template
+    # In template
     [% recaptcha %]
-
-=cut
 
 =head2 recaptcha_check
     
-Validates the value that user has filled in the form whether it maches with the CAPTCHA.
-Takes two arguments: the challenge string and the response string, which are returned with submitted form data
-in two form fields, recaptcha_challenge_field and recaptcha_response_field.
-Returns a reference to a hash containing two fields: is_valid and error. 
+Validates the input provided by the user to check if it matches the captcha.
+Arguments:
+
+=over
+
+=item C<$challenge>
+
+Challenge string retrieved from the submitted form field
+C<recaptcha_challenge_field>.
+
+=item C<$response>
+
+Response string retrieved from the submitted form field
+C<recaptcha_response_field>.
+
+=back
+
+Returns a reference to a hash containing two fields: C<is_valid> and C<error>.
+
 Example: 
 
     my $challenge = param( 'recaptcha_challenge_field' );
     my $response  = param( 'recaptcha_response_field' );
-    my $result    = recaptcha_check(
-        $challenge,
-        $response,
-    );
+    my $result    = recaptcha_check($challenge, $response);
 
     if( $result->{is_valid} ){
         print "You are a human!";
@@ -144,8 +155,6 @@ Example:
     else {
         print $result->{error};
     }
-
-=cut
 
 =head1 SEE ALSO
 
