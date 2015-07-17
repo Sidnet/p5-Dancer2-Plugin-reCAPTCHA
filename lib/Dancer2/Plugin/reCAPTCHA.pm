@@ -145,8 +145,8 @@ Returns a reference to a hash containing two fields: C<is_valid> and C<error>.
 
 Example: 
 
-    my $challenge = param( 'recaptcha_challenge_field' );
-    my $response  = param( 'recaptcha_response_field' );
+    my $challenge = param('recaptcha_challenge_field');
+    my $response  = param('recaptcha_response_field');
     my $result    = recaptcha_check($challenge, $response);
 
     if( $result->{is_valid} ){
