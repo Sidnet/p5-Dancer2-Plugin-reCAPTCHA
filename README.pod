@@ -1,0 +1,181 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Dancer2::Plugin::reCAPTCHA - Integrate reCAPTCHA into Dancer2 applications
+
+=head1 VERSION
+
+version 0.1
+
+=head1 SYNOPSIS
+
+Dancer2::Plugin::reCAPTCHA allows you to easily use reCAPTCHA in Dancer2
+applications.
+
+Add the plugin to your application:
+
+    use Dancer2::Plugin::reCAPTCHA;
+
+Configure its settings in the YAML configuration file:
+
+    plugins:
+        reCAPTCHA:
+            public_key: "public key"
+            private_key: "private key"
+            theme: "clean"
+            use_ssl: 0
+
+Put reCAPTCHA in a template:
+
+    [% recaptcha %]
+
+Display it:
+
+    return template 'feedback', { 
+        recaptcha => recaptcha_display()
+    };
+
+Validate user input in a route handler:
+
+    my $challenge = param('recaptcha_challenge_field');
+    my $response  = param('recaptcha_response_field');
+    my $result    = recaptcha_check($challenge, $response);
+
+    if ($result->{is_valid}) {
+        # Good
+    }
+    else {
+        # Bad
+    }
+
+=head1 CONFIGURATION
+
+The available configuration settings are described below.
+
+=head2 public_key
+
+The reCAPTCHA public key.
+
+=head2 private_key
+
+The reCAPTCHA private key.
+
+=head2 theme
+
+The color theme of the captcha widget. Possible values: C<red>, C<white>,
+C<blackglass>, C<clean>.
+
+=head2 use_ssl
+
+If set to C<1>, reCAPTCHA will use an SSL-based API (should be enabled on pages
+served over SSL).
+
+=head1 SUBROUTINES/METHODS
+
+=head2 recaptcha_display
+
+Generates the HTML to display the captcha which should be placed in a template. 
+
+Example:
+
+    # In route handler
+    template 'index' => { 
+        recaptcha => recaptcha_display() 
+    };
+
+    # In template
+    [% recaptcha %]
+
+=head2 recaptcha_check
+
+Validates the input provided by the user to check if it matches the captcha.
+Arguments:
+
+=over
+
+=item C<$challenge>
+
+Challenge string retrieved from the submitted form field
+C<recaptcha_challenge_field>.
+
+=item C<$response>
+
+Response string retrieved from the submitted form field
+C<recaptcha_response_field>.
+
+=back
+
+Returns a reference to a hash containing two fields: C<is_valid> and C<error>.
+
+Example: 
+
+    my $challenge = param('recaptcha_challenge_field');
+    my $response  = param('recaptcha_response_field');
+    my $result    = recaptcha_check($challenge, $response);
+
+    if( $result->{is_valid} ){
+        print "You are a human!";
+    } 
+    else {
+        print $result->{error};
+    }
+
+=head1 SEE ALSO
+
+=over 4
+
+
+
+=back
+
+* L<Captcha::reCAPTCHA>
+
+* L<Dancer::Plugin::reCAPTCHA>
+
+* L<Google reCAPTCHA API Reference|https://www.google.com/recaptcha/intro/index.html/>
+
+=head1 ACKNOWLEDGEMENTS
+
+Based on Jason A. Crome's plugin for Dancer version 1
+(Dancer::Plugin::reCAPTCHA). Makes use of Fred Moyer's Captcha::reCAPTCHA.
+
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
+
+=head1 SUPPORT
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests through the issue tracker
+at L<https://github.com/Sidnet/p5-Dancer2-Plugin-reCAPTCHA/issues>.
+You will be notified automatically of any progress on your issue.
+
+=head2 Source Code
+
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
+
+L<https://github.com/Sidnet/p5-Dancer2-Plugin-reCAPTCHA>
+
+  git clone https://github.com/Sidnet/p5-Dancer2-Plugin-reCAPTCHA.git
+
+=head1 AUTHOR
+
+Pattawan Kaewduangdee <pattawan@cpan.org>
+
+=head1 CONTRIBUTOR
+
+=for stopwords Michal Wojciechowski
+
+Michal Wojciechowski <odyniec@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Pattawan Kaewduangdee.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
