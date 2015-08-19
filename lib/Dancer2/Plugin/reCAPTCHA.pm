@@ -8,34 +8,31 @@ use warnings;
 # VERSION
 
 use Dancer2::Plugin;
-use Captcha::reCAPTCHA;
+use Captcha::reCAPTCHA::V2;
 
-my $rc = Captcha::reCAPTCHA->new;
+my $rc = Captcha::reCAPTCHA::V2->new;
 
 register recaptcha_display => sub {
     my $conf = plugin_setting();
-
-    return $rc->get_html( 
-        $conf->{public_key},
-        undef,
-        $conf->{use_ssl},
-        { theme =>  $conf->{theme} },
+    return $rc->html( 
+        $conf->{ site_key },
+        $conf->{ options },
     );
 };
+
 
 register recaptcha_check => sub {
     my $dsl = shift;
-    my ($challenge, $response) = @_;
+    my $response = shift;
     my $app = $dsl->app;
     my $conf = plugin_setting();
-
-    return $rc->check_answer(
-        $conf->{private_key},
-        $app->request->remote_address,
-        $challenge,
+    return $rc->verify(
+        $conf->{ secret },
         $response,
+        $app->request->remote_address,
     );
 };
+
 
 register_plugin;
 
@@ -56,10 +53,12 @@ Configure its settings in the YAML configuration file:
 
     plugins:
         reCAPTCHA:
-            public_key: "public key"
-            private_key: "private key"
-            theme: "clean"
-            use_ssl: 0
+            site_key: "site key"
+            secret: "secret key"
+            options:
+                theme: "light"
+                type: "image"
+                size: "normal"
 
 Put reCAPTCHA in a template:
 
@@ -73,11 +72,10 @@ Display it:
 
 Validate user input in a route handler:
 
-    my $challenge = param('recaptcha_challenge_field');
-    my $response  = param('recaptcha_response_field');
-    my $result    = recaptcha_check($challenge, $response);
+    my $response  = param('g-recaptcha-response');
+    my $result    = recaptcha_check($response);
 
-    if ($result->{is_valid}) {
+    if ($result->{success}) {
         # Good
     }
     else {
@@ -88,23 +86,33 @@ Validate user input in a route handler:
 
 The available configuration settings are described below.
 
-=head2 public_key
+=head2 site_key
 
-The reCAPTCHA public key.
+The reCAPTCHA site key.
 
-=head2 private_key
+=head2 secret
 
-The reCAPTCHA private key.
+The reCAPTCHA secret key.
 
-=head2 theme
+=head2 options
 
-The color theme of the captcha widget. Possible values: C<red>, C<white>,
-C<blackglass>, C<clean>.
+Configuration to design the widget's apperance and behavior with these following keys:
 
-=head2 use_ssl
+=over
 
-If set to C<1>, reCAPTCHA will use an SSL-based API (should be enabled on pages
-served over SSL).
+=item C<theme>
+
+The color theme of the of the widget. Possible values are 'dark' and 'light'.
+
+=item C<type>
+
+The type of the reCAPTCHA to serve. Possible values are 'audio' and 'image'.
+
+=item C<size>
+
+The size of the widget. Possible values are 'compact' and 'normal'.
+
+=back
 
 =head1 SUBROUTINES/METHODS
 
@@ -124,43 +132,37 @@ Example:
 
 =head2 recaptcha_check
     
-Validates the input provided by the user to check if it matches the captcha.
+Validates the input provided by the user to check if it is a correct answer.
 Arguments:
 
 =over
 
-=item C<$challenge>
-
-Challenge string retrieved from the submitted form field
-C<recaptcha_challenge_field>.
-
 =item C<$response>
 
 Response string retrieved from the submitted form field
-C<recaptcha_response_field>.
+C<g-recaptcha-response>.
 
 =back
 
-Returns a reference to a hash containing two fields: C<is_valid> and C<error>.
+Returns a reference to a hash containing two fields: C<success> and C<error_codes>.
 
 Example: 
 
-    my $challenge = param('recaptcha_challenge_field');
-    my $response  = param('recaptcha_response_field');
-    my $result    = recaptcha_check($challenge, $response);
+    my $response  = param('g-recaptcha-response');
+    my $result    = recaptcha_check($response);
 
-    if( $result->{is_valid} ){
+    if( $result->{success} ){
         print "You are a human!";
     } 
     else {
-        print $result->{error};
+        print $result->{error_codes};
     }
 
 =head1 SEE ALSO
 
 =for :list
 
-* L<Captcha::reCAPTCHA>
+* L<Captcha::reCAPTCHA::V2>
 
 * L<Dancer::Plugin::reCAPTCHA>
 
@@ -169,6 +171,6 @@ Example:
 =head1 ACKNOWLEDGEMENTS
 
 Based on Jason A. Crome's plugin for Dancer version 1
-(Dancer::Plugin::reCAPTCHA). Makes use of Fred Moyer's Captcha::reCAPTCHA.
+(Dancer::Plugin::reCAPTCHA).
 
 =cut
