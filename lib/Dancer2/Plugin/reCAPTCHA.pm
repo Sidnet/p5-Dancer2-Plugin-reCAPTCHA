@@ -21,7 +21,7 @@ register recaptcha_display => sub {
 };
 
 
-register recaptcha_check => sub {
+register recaptcha_verify => sub {
     my $dsl = shift;
     my $response = shift;
     my $app = $dsl->app;
@@ -73,7 +73,7 @@ Display it:
 Validate user input in a route handler:
 
     my $response  = param('g-recaptcha-response');
-    my $result    = recaptcha_check($response);
+    my $result    = recaptcha_verify($response);
 
     if ($result->{success}) {
         # Good
@@ -130,7 +130,7 @@ Example:
     # In template
     [% recaptcha %]
 
-=head2 recaptcha_check
+=head2 recaptcha_verify
     
 Validates the input provided by the user to check if it is a correct answer.
 Arguments:
@@ -149,7 +149,7 @@ Returns a reference to a hash containing two fields: C<success> and C<error_code
 Example: 
 
     my $response  = param('g-recaptcha-response');
-    my $result    = recaptcha_check($response);
+    my $result    = recaptcha_verify($response);
 
     if ($result->{success}) {
         print "You are a human!";
