@@ -1,6 +1,8 @@
 Revision history for Dancer2-Plugin-reCAPTCHA
 
 {{$NEXT}}
+
+0.2       2015-08-21
           Switched to reCAPTCHA version 2
 
 0.1       2015-07-17

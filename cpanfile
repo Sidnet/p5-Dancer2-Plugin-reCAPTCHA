@@ -1,4 +1,4 @@
-requires "Captcha::reCAPTCHA" => "0";
+requires "Captcha::reCAPTCHA::V2" => "0";
 requires "Dancer2::Plugin" => "0";
 requires "perl" => "5.006";
 requires "strict" => "0";
