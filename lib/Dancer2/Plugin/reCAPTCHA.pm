@@ -72,8 +72,8 @@ Display it:
 
 Validate user input in a route handler:
 
-    my $response  = param('g-recaptcha-response');
-    my $result    = recaptcha_verify($response);
+    my $response = param('g-recaptcha-response');
+    my $result   = recaptcha_verify($response);
 
     if ($result->{success}) {
         # Good
@@ -148,8 +148,8 @@ Returns a reference to a hash containing two fields: C<success> and C<error_code
 
 Example: 
 
-    my $response  = param('g-recaptcha-response');
-    my $result    = recaptcha_verify($response);
+    my $response = param('g-recaptcha-response');
+    my $result   = recaptcha_verify($response);
 
     if ($result->{success}) {
         print "You are a human!";
