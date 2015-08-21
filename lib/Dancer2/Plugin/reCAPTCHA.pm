@@ -155,7 +155,7 @@ Example:
         print "You are a human!";
     } 
     else {
-        print $result->{error_codes};
+        print $result->{error_codes}->[0];
     }
 
 =head1 SEE ALSO
