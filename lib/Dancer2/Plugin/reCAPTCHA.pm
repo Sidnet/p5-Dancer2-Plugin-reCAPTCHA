@@ -102,15 +102,15 @@ Configuration to design the widget's apperance and behavior with these following
 
 =item C<theme>
 
-The color theme of the of the widget. Possible values are 'dark' and 'light'.
+The color theme of the of the widget. Possible values are C<'dark'> and C<'light'>.
 
 =item C<type>
 
-The type of the reCAPTCHA to serve. Possible values are 'audio' and 'image'.
+The type of the reCAPTCHA to serve. Possible values are C<'audio'> and C<'image'>.
 
 =item C<size>
 
-The size of the widget. Possible values are 'compact' and 'normal'.
+The size of the widget. Possible values are C<'compact'> and C<'normal'>.
 
 =back
 
