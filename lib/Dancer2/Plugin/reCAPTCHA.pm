@@ -151,7 +151,7 @@ Example:
     my $response  = param('g-recaptcha-response');
     my $result    = recaptcha_check($response);
 
-    if( $result->{success} ){
+    if ($result->{success}) {
         print "You are a human!";
     } 
     else {
