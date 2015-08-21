@@ -15,8 +15,8 @@ my $rc = Captcha::reCAPTCHA::V2->new;
 register recaptcha_display => sub {
     my $conf = plugin_setting();
     return $rc->html( 
-        $conf->{ site_key },
-        $conf->{ options },
+        $conf->{site_key},
+        $conf->{options},
     );
 };
 
@@ -27,7 +27,7 @@ register recaptcha_check => sub {
     my $app = $dsl->app;
     my $conf = plugin_setting();
     return $rc->verify(
-        $conf->{ secret },
+        $conf->{secret},
         $response,
         $app->request->remote_address,
     );
